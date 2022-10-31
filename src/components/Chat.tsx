@@ -1,9 +1,14 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { Context } from ".."
 import Loader from "./Loader"
 
 
 const Chat = () => {
   const [message, setMessage] = useState<string>('')
+
+  const {auth} = useContext(Context)
+  console.log(auth.currentUser.email)
+
   return (
     <div className="chat">
       <div className="chat__wrapper">
