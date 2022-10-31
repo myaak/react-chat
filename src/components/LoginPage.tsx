@@ -23,9 +23,7 @@ const LoginPage = () => {
       <div className="login__wrapper">
 
         <form onSubmit={(e) => handleOnSubmit(e)}>
-          <input type="text" placeholder={"Username"}
-            value={userName} onChange={(e) => setUserName(e.target.value)} />
-          <input type="submit" value="Log In" />
+          <input type="submit" value="Log In using GOOGLE" />
         </form>
       </div>
     </div>

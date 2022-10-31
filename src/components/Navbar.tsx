@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="navbar__wrapper">
-        <div onClick={handleLogOut}>LOG OUT</div>
+        <div onClick={handleLogOut}>{`${user ? 'LOG OUT' : 'YOU ARE NOT LOGGED IN'}`}</div>
       </div>
     </div>
   )
