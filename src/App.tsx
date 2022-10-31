@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Context } from '.'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { Navbar, AppRouter, Chat, LoginPage } from './components'
+import { Navbar, AppRouter, Chat, LoginPage, Loader } from './components'
 import { privateRoutes, publicRoutes } from './routes'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import './styles.scss'
 
 function App() {
-  const [user, setUser] = useState<boolean>(false)
 
-  useEffect(() => {
+  const { auth } = useContext(Context)
+  const [user, loading, error] = useAuthState(auth)
 
-  }, [user])
+  if (loading) {
+    console.log(loading)
+    return <Loader />
+  }
   return (
     <BrowserRouter>
       <Navbar />
-      <AppRouter
-        isUser={user}
-      />
+      <AppRouter />
     </BrowserRouter>
   )
 }
