@@ -9,11 +9,18 @@ const LoginPage = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const {auth} = useContext(Context)
+  
+  let user = null
 
   const handleLogin = async () => {
     const provider = new firebase.auth.GoogleAuthProvider() 
-    const {user} = await auth.signInWithPopup(provider)
-    console.log(user)
+    provider.addScope('profile')
+    provider.addScope('email')
+    await auth.signInWithPopup(provider)
+    .then(function(result:any){
+        var token = result.credential.accessToken
+        user = result.user
+        })
   }
 
   const handleOnSubmit = (e: FormEvent) => {
@@ -33,7 +40,7 @@ const LoginPage = () => {
         <form>
           <input type="button" value="Log In by Email And Password" />
           <input type="button" value="Log In" />
-          <input type="button" onClick={handleLogin} value="Log In using GOOGLE" />
+          <input type="button" onClick={handleOnSubmit} value="Log In using GOOGLE" />
           <input type="button" onClick={handleSignUpRedirect} value="Sign Up" />
         </form>
       </div>

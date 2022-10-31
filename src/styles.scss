@@ -4,6 +4,10 @@
   box-sizing:border-box;
 }
 
+body {
+  overflow:hidden
+}
+
 .navbar {
   width:100vw;
   height:72px;
@@ -112,13 +116,14 @@
   &__messages {
     width:100%;
     height:85%;
+    overflow-y:scroll;
   }
   &__input {
-    height:15%;
-  }
-  &__input input[type="text"]{
     width:100%;
-    height:100%;
+  }
+  &__chat input[type="text"]{
+    width:90%;
+    height:30px;
     border:none;
     background-color:#40444b;
     border-radius:15px;
@@ -126,14 +131,15 @@
     color:#fff;
     padding:0 15px;
     font-size:16px;
-    min-height:100%;
-    height:fit-content;
   }
-  &__input input[type="text"]:hover{
+  &__chat input[type="text"]:hover{
     outline:none;
   }
-  &__input input[type="text"]:focus{
+  &__chat input[type="text"]:focus{
     outline:none;
+  }
+  &__chat {
+
   }
 
 
@@ -227,4 +233,28 @@
   }
 
 
+}
+
+.message-item {
+  margin-top:10px;
+  margin-bottom:10px;
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  color:#fff;
+  &__container {
+    display:flex; 
+    align-items:center;
+    gap:10px;
+  }
+  &__name {
+  }
+  &__message {
+    border: 1px solid #fff;
+    padding:3px 3px;
+    border-radius:10px;
+    block-size:fit-content;
+    height:fit-content;
+    width:fit-content;
+  }
 }
