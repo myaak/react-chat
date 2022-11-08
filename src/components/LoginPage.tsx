@@ -1,6 +1,6 @@
 import { FormEvent, useContext, useState } from 'react'
 import firebase from 'firebase/compat/app'
-import {Context} from '../index'
+import { Context } from '../index'
 import { Navigate, Route, useLocation, useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
@@ -8,19 +8,19 @@ const LoginPage = () => {
 
   const location = useLocation()
   const navigate = useNavigate()
-  const {auth} = useContext(Context)
-  
+  const { auth } = useContext(Context)
+
   let user = null
 
   const handleLogin = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider() 
+    const provider = new firebase.auth.GoogleAuthProvider()
     provider.addScope('profile')
     provider.addScope('email')
     await auth.signInWithPopup(provider)
-    .then(function(result:any){
+      .then(function(result: any) {
         var token = result.credential.accessToken
         user = result.user
-        })
+      })
   }
 
   const handleOnSubmit = (e: FormEvent) => {
@@ -28,9 +28,14 @@ const LoginPage = () => {
     handleLogin()
   }
 
+  const handleLogInWithEmail = (e: FormEvent) => {
+    e.preventDefault()
+    navigate('/emaillogin', { state: location })
+
+  }
 
   const handleSignUpRedirect = () => {
-    navigate('/signup', {state: location})
+    navigate('/signup', { state: location })
 
   }
 
@@ -38,7 +43,7 @@ const LoginPage = () => {
     <div className="login">
       <div className="login__wrapper">
         <form>
-          <input type="button" value="Log In by Email And Password" />
+          <input type="button" value="Log In by Email And Password" onClick={(e) => handleLogInWithEmail(e)} />
           <input type="button" value="Log In" />
           <input type="button" onClick={handleOnSubmit} value="Log In using GOOGLE" />
           <input type="button" onClick={handleSignUpRedirect} value="Sign Up" />
