@@ -2,9 +2,12 @@ import { FormEvent, useContext, useState } from 'react'
 import firebase from 'firebase/compat/app'
 import { Context } from '../index'
 import { Navigate, Route, useLocation, useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button'
+import {StyledTextField} from './StyledTextField'
 
 const LoginPage = () => {
-  const [userName, setUserName] = useState<string>('')
+  const [userEmail, setUserEmail] = useState<string>('')
+  const [userPassword, setUserPassword] = useState<string>('')
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -28,9 +31,20 @@ const LoginPage = () => {
     handleLogin()
   }
 
-  const handleLogInWithEmail = (e: FormEvent) => {
+
+  const handleRegister = (e: FormEvent) => {
     e.preventDefault()
-    navigate('/emaillogin', { state: location })
+    navigate('/register', {state: location})
+  }
+
+  const handleLogInWithEmail = async (e: FormEvent) => {
+    e.preventDefault();
+    await firebase.auth().signInWithEmailAndPassword(userEmail, userPassword)
+      .then(() => {
+      })
+      .catch((error) => {
+        console.log(error)
+      })
 
   }
 
@@ -40,13 +54,26 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="login">
-      <div className="login__wrapper">
-        <form>
-          <input type="button" value="Log In by Email And Password" onClick={(e) => handleLogInWithEmail(e)} />
-          <input type="button" value="Log In" />
-          <input type="button" onClick={handleOnSubmit} value="Log In using GOOGLE" />
-          <input type="button" onClick={handleSignUpRedirect} value="Sign Up" />
+    <div className="sign-up">
+      <div className="sign-up__wrapper">
+        <form onSubmit={handleLogInWithEmail}>
+          <StyledTextField label="Email" value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
+            />
+          <StyledTextField label="Password" value={userPassword}
+            type="password" 
+            onChange={(e) => setUserPassword(e.target.value)}
+            />
+
+          <div style={{
+            display: 'inline-flex',
+            gap: '10px',
+            color: '#fff'
+          }}>
+            <Button>Forgot password?</Button>
+            <Button onClick={handleSignUpRedirect}>Register</Button>
+          </div>
+          <Button type="submit" variant="contained">Log In</Button>
         </form>
       </div>
     </div>

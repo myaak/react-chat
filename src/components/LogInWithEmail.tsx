@@ -11,13 +11,6 @@ const LogInWithEmail = () => {
   const location = useLocation()
 
   const handleSignIn = async (e: FormEvent) => {
-    e.preventDefault();
-    await firebase.auth().signInWithEmailAndPassword(userEmail, userPassword)
-      .then(() => {
-      })
-      .catch((error) => {
-        console.log(error)
-      })
   }
 
   return (

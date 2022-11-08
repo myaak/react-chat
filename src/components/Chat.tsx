@@ -16,8 +16,12 @@ const Chat = () => {
   const [messages, loading] = useCollectionData(
     firestore.collection('messages').orderBy('createdAt')
   )
-  const textarea = document.querySelector('textarea');
+  const textarea = document.querySelector('textarea')
   const chat = document.querySelector('.chat__window__messages')
+  const chatWrap = document.querySelector('.chat__window__input') as HTMLElement | null
+
+
+  console.log(typeof (chatWrap))
 
   const sendMessage = async (e: any) => {
     e.preventDefault()
@@ -45,8 +49,11 @@ const Chat = () => {
     if (el == null) return
     setTimeout(function() {
       if (el == null) return
+      if (chatWrap == null) return
       el.style.cssText = 'height:auto; padding:0';
       el.style.cssText = 'height:' + el?.scrollHeight + 'px';
+      chatWrap.style.cssText = 'height:auto; padding:0';
+      chatWrap.style.cssText = 'height:' + chatWrap.scrollHeight + 'px';
     }, 0);
 
   }
@@ -55,21 +62,23 @@ const Chat = () => {
     <div className="chat">
       <div className="chat__wrapper">
         <div className="chat__window">
-          <div className="chat__window__messages">
-            {messages?.map((item, index) =>
-              <MessageItem
-                avatar={item.photoURL}
-                name={item.displayName === null ? item.email : item.displayName}
-                message={item.message}
-                isAuthor={user?.uid === item.uid}
-              />
-            )}
+          <div className="chat__window__wrapper">
+            <div className="chat__window__messages">
+              {messages?.map((item, index) =>
+                <MessageItem
+                  avatar={item.photoURL}
+                  name={item.displayName === null ? item.email : item.displayName}
+                  message={item.message}
+                  isAuthor={user?.uid === item.uid}
+                />
+              )}
+            </div>
           </div>
           <div className="chat__window__input">
             <div className="chat__window__chat">
               <form onSubmit={sendMessage}>
-                <textarea value={message} rows={1} data-min-rows={1}
-                  onChange={(e) => setMessage(e.target.value)} wrap="soft">
+                <textarea value={message}
+                  onChange={(e) => setMessage(e.target.value)}>
                 </textarea>
                 <IconButton type="submit"><SendIcon style={{
                   color: 'gray',

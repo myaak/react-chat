@@ -1,3 +1,5 @@
+$inputTextColor: #3d4351;
+
 * {
   margin:0;
   padding:0;
@@ -19,6 +21,7 @@
 body {
   overflow:hidden
 }
+
 
 .navbar {
   width:100vw;
@@ -153,20 +156,39 @@ body {
     }
 
     */
+  &__wrapper {
+    overflow-y:scroll;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  &__container {
+
+  }
+
 
   &__messages {
-    width:100%;
-    height:85%;
-    padding: 15px 15px;
-    overflow-y:scroll;
+  padding: 15px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 90%;
+
   }
   &__input {
     width:100%;
+    height: 15%;
+  }
+
+  &__chat {
+    height:100%;
   }
 
   &__chat form{
     display:flex;
-    align-items:center;
+    height:100%;
+    align-items:flex-end;
     background-color:#3d4351;
     padding: 10px 10px;
     border-radius:15px;
@@ -251,14 +273,12 @@ body {
     gap:20px;
   }
 
-  &__wrapper form input[type="text"]{ 
-    width:250px;
-    height:40px;
-    border-radius:25px;
-    border:none;
-    padding:0 10px;
+  &__wrapper form input{ 
+    background-color: $inputTextColor;
+    color: #fff;
   }
   &__wrapper form input:focus {
+    background-color: $inputTextColor;
     outline:none;
   }
   &__wrapper form input[type="submit"] {
