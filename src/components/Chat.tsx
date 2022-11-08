@@ -6,6 +6,7 @@ import { Context } from ".."
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useAuthState } from "react-firebase-hooks/auth"
 import firebase from "firebase/compat/app"
+import { maxHeight } from "@mui/system";
 
 
 const Chat = () => {
@@ -16,7 +17,7 @@ const Chat = () => {
     firestore.collection('messages').orderBy('createdAt')
   )
   const textarea = document.querySelector('textarea');
-
+  const chat = document.querySelector('.chat__window__messages')
 
   const sendMessage = async (e: any) => {
     e.preventDefault()
@@ -30,22 +31,18 @@ const Chat = () => {
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
     setMessage('')
-    if(textarea) textarea.style.cssText = 'height: 100%';
+    if (textarea) textarea.style.cssText = 'height: 100%';
 
   }
 
   if (loading)
     return <Loader />
 
-
-
-
-
   textarea?.addEventListener('keydown', autosize);
 
   function autosize() {
     let el = textarea;
-      if (el == null) return
+    if (el == null) return
     setTimeout(function() {
       if (el == null) return
       el.style.cssText = 'height:auto; padding:0';
