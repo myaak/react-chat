@@ -1,5 +1,5 @@
-import { EventHandler, useContext, useState } from "react"
-import {UserPanel, UsersList} from '.'
+import { useRef, useContext, useState } from "react"
+import { UserPanel, UsersList } from '.'
 import { MessageItem, Loader } from "./index"
 import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton'
@@ -19,6 +19,7 @@ const Chat = () => {
   const textarea = document.querySelector('textarea')
   const chatMessages = document.querySelector('.chat__window__wrapper') as HTMLElement | null
   const chatInput = document.querySelector('.chat__window__input') as HTMLElement | null
+  const dummy = useRef<null | HTMLDivElement>(null);
 
   const sendMessage = async (e: any) => {
     e.preventDefault()
@@ -35,9 +36,11 @@ const Chat = () => {
     setMessage('')
     if (textarea) textarea.style.cssText = 'height: 100%';
 
-    setTimeout( () => {
-      if (chatMessages) chatMessages.scrollTo(0, chatMessages.scrollHeight*2)
-    },500)
+    setTimeout(() => {
+      //if (chatMessages) chatMessages.scrollTo(0, chatMessages.scrollHeight * 2)
+      if (dummy.current)
+        dummy.current.scrollIntoView({ behavior: 'smooth' })
+    }, 500)
   }
 
   if (loading)
@@ -73,6 +76,7 @@ const Chat = () => {
                   message={item.message}
                 />
               )}
+              <div ref={dummy}></div>
             </div>
           </div>
           <div className="chat__window__input">

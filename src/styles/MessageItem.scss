@@ -10,13 +10,31 @@
       background-color: #1e2d2f;
       cursor: pointer;
     }
-  
+
     &__container {
+      width:100%;
       display:flex; 
       align-items:flex-start;
       gap:10px;
       font-weight: 600;
+      height:fit-content;
+      width:fit-content;
     }
+
+    &__wrapper {
+      height:fit-content;
+      width:fit-content;
+    }
+
+    &__name {
+
+      @media screen and (max-width:480px) {
+        width:80%;
+        overflow:hidden;
+        text-overflow:ellipsis;
+      }
+    }
+  
   
     &__message {
       color:#b2bcbd;

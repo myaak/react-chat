@@ -12,12 +12,12 @@ const MessageItem = ({ avatar, name, message, isAuthor }: Props) => {
     <div className="message-item">
       <div className="message-item__container">
         <Avatar src={avatar} />
-        <div>
-        <div className="message-item__name">{name}</div>
-        <div className="message-item__message"
-      >
-        {message}
-      </div>
+        <div className="messa-item__wrapper">
+          <div className="message-item__name">{name}</div>
+          <div className="message-item__message"
+          >
+            {message}
+          </div>
         </div>
 
       </div>

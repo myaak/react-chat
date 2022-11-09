@@ -32,7 +32,10 @@
             gap:10px;
         }
         .username {
+          width:100px;
             font-weight: 600;
+            text-overflow:ellipsis;
+            overflow:hidden;
         }
         .preferences {
             display:flex;
