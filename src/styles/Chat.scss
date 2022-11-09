@@ -1,0 +1,96 @@
+@import 'colors';
+
+.chat {
+  display:flex;
+    width:100%;
+    height:calc(100vh - 72px - 72px);
+    background-color:$mainColor;
+
+  
+    &__wrapper {
+      width:60%;
+      height:100%;
+
+      margin:0 auto;
+      border-radius:15px;
+      display:flex;
+      flex-direction:column;
+
+      @media screen and (max-width:480px){
+        width: 100%;
+        min-height: -webkit-fill-available;
+      }
+    }
+    
+    &__window {
+      height:99%;
+      width:100%;
+      background-color:$mainColor;
+      display:flex;
+      flex-direction:column;
+      box-shadow: 1px solid #fff;
+      border-radius:15px;
+      padding: 15px 15px 0 15px;
+      position:relative;
+
+    &__wrapper {
+      min-height: calc(90% - 72px);
+      overflow-y:scroll;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    &__messages {
+    padding: 15px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    min-height: 100%;
+    }
+
+    &__input {
+      width:100%;
+      height: auto;
+    }
+  
+    &__chat {
+      width:100%;
+      height:100%;
+      display:flex;
+      flex-direction: column-reverse;
+    }
+  
+    &__chat form{
+      height:100%;
+      width:100%;
+      display:flex;
+      justify-content:flex-end;
+      background-color:$secondaryColor;
+      padding: 10px 10px;
+      border-radius:15px;
+    }
+
+    &__chat textarea{
+      width:95%;
+      height:100%;
+      border:none;
+      outline:none;
+      color:#fff;
+      background-color:$secondaryColor;
+      padding:0 15px;
+      font-size:14px;
+      overflow:hidden;
+      resize:none;
+      box-sizing:padding-box;
+    }
+
+    &__chat textarea:hover{
+      outline:none;
+    }
+
+    &__chat textarea:focus{
+      outline:none;
+    }
+    }
+}

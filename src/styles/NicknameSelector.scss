@@ -1,0 +1,80 @@
+@import 'colors';
+
+.nickname{
+    width:100vw;
+    height:100%;
+  
+    &__wrapper {
+      width:100%;
+      height:100%;
+      background-color:$mainColor;
+    }
+    &__wrapper form {
+      width:100%;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap:20px;
+    }
+  
+    &__wrapper form input{ 
+      width:250px;
+      background-color: $secondaryColor;
+      color: #fff;
+    }
+  
+    &__wrapper form input:focus {
+      background-color: $secondaryColor;
+      outline:none;
+    }
+  
+    &__wrapper form input[type="submit"] {
+      width:250px;
+      border-radius:25px;
+      border:none;
+      padding:0 10px;
+      height:40px;
+      background-color:#24A0ED;
+      color:#333333;
+    }
+  
+    &__wrapper form input[type="button"] {
+      width:100%;
+      border-radius:25px;
+      border:none;
+      padding:0 10px;
+      height:40px;
+      background-color:#24A0ED;
+      color:#333333;
+    }
+  
+    &__wrapper form *{
+      border-radius:15px;
+    }
+  
+    &__wrapper form button[type="button"] {
+      border-radius:15px;
+      width:250px;
+      height: 40px;
+      background-color: $buttonBackgroundColor;
+    }
+  
+    &__wrapper button[type="button"]:hover {
+      background-color: $buttonBackgroundColorHover;
+    }
+  
+    &__wrapper form button[type="submit"] {
+      border-radius:15px;
+      height: 40px;
+      width:250px;
+      background-color: $buttonBackgroundColor;
+    }
+  
+    &__wrapper button[type="submit"]:hover {
+      cursor:pointer;
+      background-color: $buttonBackgroundColorHover;
+    }
+    
+  }

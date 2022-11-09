@@ -1,0 +1,28 @@
+.footer {
+    width:100vw;
+    height:72px;
+    color:#F1AB86;
+    bottom: 0;
+
+    @media screen and (max-width:480px){
+        display:none;
+      }
+
+    button {
+      background-color: $buttonBackgroundColor;
+      color: $buttonColor;
+    }
+    button:hover {
+      background-color: $buttonBackgroundColorHover;
+    }
+  
+    &__wrapper {
+      height:100%;
+      width:100%;
+      background-color:$secondaryColor;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+    }
+  }

@@ -17,10 +17,12 @@ export const StyledTextField = styled(TextField)({
     borderBottomColor: border
   },
   "& .MuiInputBase-root": {
+    borderRadius: '15px',
     color: textColor
   },
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
+      borderRadius: '15px',
       borderColor: border,
       borderWidth: 1,
 

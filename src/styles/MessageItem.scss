@@ -1,0 +1,29 @@
+.message-item {
+    margin-top:10px;
+    margin-bottom:10px;
+    display:flex;
+    align-items: flex-start;
+    width:100%;
+    color:#fff;
+
+    &:hover {
+      background-color: #1e2d2f;
+      cursor: pointer;
+    }
+  
+    &__container {
+      display:flex; 
+      align-items:flex-start;
+      gap:10px;
+      font-weight: 600;
+    }
+  
+    &__message {
+      color:#b2bcbd;
+      padding:3px 3px;
+      border-radius:10px;
+      height:fit-content;
+      word-break: break-word;
+      width:fit-content;
+    }
+}

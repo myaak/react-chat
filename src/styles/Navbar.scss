@@ -1,0 +1,38 @@
+@import 'colors';
+
+.navbar {
+    width:100vw;
+    height:72px;
+    color:#F1AB86;
+
+    @media screen and (max-width:480px){
+      height:50px;
+    }
+
+    button {
+      background-color: $buttonBackgroundColor;
+      color: $buttonColor;
+    }
+    button:hover {
+      background-color: $buttonBackgroundColorHover;
+    }
+  
+    &__wrapper {
+      height:100%;
+      width:100%;
+      background-color:#112627;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+    }
+    &__wrapper ul {
+      height:100%;
+      list-style:none;
+      display:flex;
+      padding:0px 25px;
+    }
+    &__name {
+      justify-self: center;
+    }
+  }

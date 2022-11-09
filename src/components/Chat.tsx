@@ -1,4 +1,5 @@
 import { EventHandler, useContext, useState } from "react"
+import {UserPanel, UsersList} from '.'
 import { MessageItem, Loader } from "./index"
 import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton'
@@ -6,7 +7,6 @@ import { Context } from ".."
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useAuthState } from "react-firebase-hooks/auth"
 import firebase from "firebase/compat/app"
-import { maxHeight } from "@mui/system";
 
 
 const Chat = () => {
@@ -17,11 +17,8 @@ const Chat = () => {
     firestore.collection('messages').orderBy('createdAt')
   )
   const textarea = document.querySelector('textarea')
-  const chat = document.querySelector('.chat__window__messages')
-  const chatWrap = document.querySelector('.chat__window__input') as HTMLElement | null
-
-
-  console.log(typeof (chatWrap))
+  const chatMessages = document.querySelector('.chat__window__wrapper') as HTMLElement | null
+  const chatInput = document.querySelector('.chat__window__input') as HTMLElement | null
 
   const sendMessage = async (e: any) => {
     e.preventDefault()
@@ -34,9 +31,13 @@ const Chat = () => {
       message: message,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
+
     setMessage('')
     if (textarea) textarea.style.cssText = 'height: 100%';
 
+    setTimeout( () => {
+      if (chatMessages) chatMessages.scrollTo(0, chatMessages.scrollHeight*2)
+    },500)
   }
 
   if (loading)
@@ -49,27 +50,27 @@ const Chat = () => {
     if (el == null) return
     setTimeout(function() {
       if (el == null) return
-      if (chatWrap == null) return
+      if (chatInput == null) return
       el.style.cssText = 'height:auto; padding:0';
       el.style.cssText = 'height:' + el?.scrollHeight + 'px';
-      chatWrap.style.cssText = 'height:auto; padding:0';
-      chatWrap.style.cssText = 'height:' + chatWrap.scrollHeight + 'px';
+      chatInput.style.cssText = 'height:auto; padding:0';
+      chatInput.style.cssText = 'height:' + chatInput.scrollHeight + 'px';
     }, 0);
-
   }
 
   return (
     <div className="chat">
+      <UserPanel />
       <div className="chat__wrapper">
         <div className="chat__window">
           <div className="chat__window__wrapper">
             <div className="chat__window__messages">
               {messages?.map((item, index) =>
                 <MessageItem
+                  key={index}
                   avatar={item.photoURL}
                   name={item.displayName === null ? item.email : item.displayName}
                   message={item.message}
-                  isAuthor={user?.uid === item.uid}
                 />
               )}
             </div>
@@ -89,7 +90,9 @@ const Chat = () => {
             </div>
           </div>
         </div>
+
       </div>
+      <UsersList />
     </div >
   )
 }

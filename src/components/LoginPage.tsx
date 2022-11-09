@@ -54,8 +54,8 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="sign-up">
-      <div className="sign-up__wrapper">
+    <div className="login">
+      <div className="login__wrapper">
         <form onSubmit={handleLogInWithEmail}>
           <StyledTextField label="Email" value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '.'
 import { BrowserRouter } from 'react-router-dom'
-import { Navbar, AppRouter, Chat, LoginPage, Loader } from './components'
+import { Navbar, AppRouter, Loader, Footer } from './components'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import './styles.scss'
+import './styles/styles.scss'
 
 function App() {
 
@@ -15,10 +15,14 @@ function App() {
     return <Loader />
   }
   return (
+    <div className="page-container">
     <BrowserRouter>
-      <Navbar />
-      <AppRouter />
+      <div className="content">
+        <AppRouter />
+      </div>
     </BrowserRouter>
+    </div>
+
   )
 }
 

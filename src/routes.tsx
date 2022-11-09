@@ -1,8 +1,8 @@
-import { LOGIN_ROUTE, CHAT_ROUTE, SIGNUP_ROUTE } from './utils/consts'
+import { LOGIN_ROUTE, CHAT_ROUTE, SIGNUP_ROUTE, NICKNAME_ROUTE } from './utils/consts'
 import { LoginPage, Chat } from './components'
 import SignUpPage from './components/SignUp'
-import LogInWithEmail from './components/LogInWithEmail'
 import { RouteObject } from 'react-router-dom'
+import NicknameSelector from './components/NicknameSelector'
 
 export const publicRoutes: RouteObject[] = [
   {
@@ -12,13 +12,7 @@ export const publicRoutes: RouteObject[] = [
   {
     path: SIGNUP_ROUTE,
     element: <SignUpPage />
-  },
-  {
-    path: '/emaillogin',
-    element: <LogInWithEmail />
   }
-
-
 ]
 
 export const privateRoutes: RouteObject[] = [
@@ -26,4 +20,5 @@ export const privateRoutes: RouteObject[] = [
     path: CHAT_ROUTE,
     element: <Chat />
   }
+
 ]

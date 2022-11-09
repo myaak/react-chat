@@ -1,0 +1,94 @@
+@import 'colors';
+
+.user_panel {
+    padding:10px 10px;
+    width:440px;
+    height:100%;
+    background-color: #112627;
+    // border-right: 1px solid #fff;
+    // border-left: 1px solid #fff;
+    z-index:2;
+
+    .article {
+        width:100%;
+        color:#fff;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    @media screen and (max-width:1024px){
+        display:none;
+    }
+    &__wrapper {
+        display:flex;
+        width:50%;
+        margin:0 auto;
+        gap:10px;
+        height:50px;
+
+        .user-info {
+            display:flex;
+            align-items: center;
+            gap:10px;
+        }
+        .username {
+            font-weight: 600;
+        }
+        .preferences {
+            display:flex;
+            align-items: center;
+        }
+    }
+    .settings {
+        padding: 15px 15px;
+        .MuiTextField-root {
+            width:60%;
+            height:40px;
+            background-color: $secondaryColor;
+            color: #fff;
+            border-radius: 15px;
+        }
+        .MuiInputBase-root {
+            height:100%;
+        }
+        .MuiInputBase-root fieldset{
+            height:100%;
+        }
+        .name_change {
+            width:100%;
+            display:flex;
+            justify-content:center;
+            padding: 10px 0px;
+
+        }
+        form {
+            height:40px;
+            display:flex;
+            gap: 15px;
+        }
+        button[type="submit"] {
+            border-radius:15px;
+            background-color: $buttonBackgroundColor;
+          }
+        
+        button[type="submit"]:hover {
+            cursor:pointer;
+            background-color: $buttonBackgroundColorHover;
+        }
+
+        .logout {
+            width: 100px;
+            margin:0 auto;
+
+            button[type="button"] {
+                border-radius:15px;
+                background-color: $buttonBackgroundColor;
+              }
+            
+            button[type="button"]:hover {
+                cursor:pointer;
+                background-color: $buttonBackgroundColorHover;
+            }
+        }
+    }
+}
