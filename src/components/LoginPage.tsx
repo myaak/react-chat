@@ -1,13 +1,14 @@
-import { FormEvent, useContext, useState } from 'react'
+import { useContext } from 'react'
 import firebase from 'firebase/compat/app'
 import { Context } from '../index'
-import { Navigate, Route, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
-import {StyledTextField} from './StyledTextField'
+import { StyledTextField } from './StyledTextField'
+import { Formik } from 'formik'
+import { FormLabel } from '@mui/material'
+import * as Yup from 'yup'
 
 const LoginPage = () => {
-  const [userEmail, setUserEmail] = useState<string>('')
-  const [userPassword, setUserPassword] = useState<string>('')
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -15,37 +16,13 @@ const LoginPage = () => {
 
   let user = null
 
-  const handleLogin = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    provider.addScope('profile')
-    provider.addScope('email')
-    await auth.signInWithPopup(provider)
-      .then(function(result: any) {
-        var token = result.credential.accessToken
-        user = result.user
-      })
-  }
-
-  const handleOnSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    handleLogin()
-  }
-
-
-  const handleRegister = (e: FormEvent) => {
-    e.preventDefault()
-    navigate('/register', {state: location})
-  }
-
-  const handleLogInWithEmail = async (e: FormEvent) => {
-    e.preventDefault();
-    await firebase.auth().signInWithEmailAndPassword(userEmail, userPassword)
+  const handleLogInWithEmail = async (username: string, password: string) => {
+    await firebase.auth().signInWithEmailAndPassword(username, password)
       .then(() => {
       })
       .catch((error) => {
         console.log(error)
       })
-
   }
 
   const handleSignUpRedirect = () => {
@@ -56,25 +33,69 @@ const LoginPage = () => {
   return (
     <div className="login">
       <div className="login__wrapper">
-        <form onSubmit={handleLogInWithEmail}>
-          <StyledTextField label="Email" value={userEmail}
-            onChange={(e) => setUserEmail(e.target.value)}
-            />
-          <StyledTextField label="Password" value={userPassword}
-            type="password" 
-            onChange={(e) => setUserPassword(e.target.value)}
-            />
+        <Formik initialValues={{ email: '', password: '' }}
+          validationSchema={Yup.object({
+            email: Yup.string()
+              .required("Username required!")
+              .min(6, "Username too short!")
+              .max(28, "Username too long!"),
+            password: Yup.string()
+              .required("Password required!")
+              .min(6, "Password too short!")
+              .max(28, "Password too long!"),
+          })}
 
-          <div style={{
-            display: 'inline-flex',
-            gap: '10px',
-            color: '#fff'
-          }}>
-            <Button>Forgot password?</Button>
-            <Button onClick={handleSignUpRedirect}>Register</Button>
-          </div>
-          <Button type="submit" variant="contained">Log In</Button>
-        </form>
+          onSubmit={async(values) => {
+              const userValues = {...values}
+              await fetch('http://localhost:4000/auth/login', {
+                method:"POST",
+                credentials: 'include',
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              body: JSON.stringify(userValues)
+              })
+              .catch((err:any) => {
+                console.log(err)
+              })
+              .then((res:any) => {
+                return res.json()
+              })
+              .then((data:any) => {
+                if(!data) return;
+                console.log(data)
+              })
+
+              //handleLogInWithEmail(user.email, user.password)
+          }}
+        >
+          {({
+            values,
+            errors,
+            handleChange,
+            handleSubmit,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <FormLabel>Sign In</FormLabel>
+              <StyledTextField label="Email" value={values.email} name="email"
+                onChange={handleChange}
+              /> 
+              <StyledTextField label="Password" value={values.password} name="password"
+                type="password"
+                onChange={handleChange}
+              />
+              <div style={{
+                display: 'inline-flex',
+                gap: '10px',
+                color: '#fff'
+              }}>
+                <Button>Forgot password?</Button>
+                <Button onClick={handleSignUpRedirect}>Register</Button>
+              </div>
+              <Button type="submit" variant="contained">Log In</Button>
+            </form>
+          )}
+        </Formik>
       </div>
     </div>
   )
