@@ -96,12 +96,13 @@ body {
 
   &__wrapper form *{
     border-radius:15px;
+    // color: #fff;
   }
 
   &__wrapper form input{ 
     width:250px;
     background-color: $secondaryColor;
-    color: #fff;
+
   }
 
   &__wrapper form input:focus {

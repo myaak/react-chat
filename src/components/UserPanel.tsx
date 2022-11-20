@@ -1,6 +1,5 @@
 import { FormEvent, useContext, useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { Context } from ".."
 import Avatar from '@mui/material/Avatar'
 import SettingsIcon from '@mui/icons-material/Settings';
 import IconButton from "@mui/material/IconButton";
@@ -9,6 +8,7 @@ import PaletteIcon from '@mui/icons-material/Palette';
 import { StyledTextField } from './StyledTextField'
 import Button from "@mui/material/Button";
 import { updateProfile } from "firebase/auth";
+import { AccountContext } from "./UserContext";
 
 const UserPanel = () => {
 
@@ -18,8 +18,8 @@ const UserPanel = () => {
   const [newNickname, setNewNickname] = useState<string>('')
   const [error, setError] = useState<string>('')
 
-  const { auth, firestore } = useContext(Context)
-  const [user] = useAuthState(auth)
+  const { user, setUser } = useContext(AccountContext)
+
 
   const handleAcceptNickname = async (e: FormEvent) => {
     if (newNickname === '') {
@@ -36,17 +36,51 @@ const UserPanel = () => {
       return;
     }
 
-    if (user != undefined) {
-      updateProfile(user, {
-        displayName: newNickname
-      }).catch((error) => {
-        console.log(error)
-      });
+    fetch("http://localhost:4000/modify/changename", {
+      method: "POST",
+      credentials: "include",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({email: user.email, username: newNickname})
+    })
+    .catch(err => {
+        console.log(err)
+        return
+      })
+    .then(res => {
+        if(!res || !res.ok) {
+          return
+        }
+        return res.json()
+      })
+    .then(data => {
+        console.log({...user, data})
+      })
     }
-  }
 
   const handleLogOut = () => {
-    auth.signOut()
+    fetch("http://localhost:4000/auth/logout", {
+      method: "POST",
+      credentials: "include",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({loggedIn: false, email: null})
+    })
+    .catch(err => {
+        console.log(err)
+        return
+      })
+    .then(res => {
+        if(!res || !res.ok) {
+          return
+        }
+        return res.json()
+      })
+    .then(data => {
+        setUser({...data})
+      })
   }
 
   useEffect(() => {
@@ -62,7 +96,7 @@ const UserPanel = () => {
           <div className="username" style={{
             color: '#fff'
           }}>
-            {user.displayName}
+            {user.username}
           </div>
         </div>
         <div className="preferences">

@@ -1,21 +1,19 @@
-import { useRef, useContext, useState } from "react"
+import { useRef, useContext, useState, useEffect } from "react"
 import { UserPanel, UsersList } from '.'
 import { MessageItem, Loader } from "./index"
 import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton'
-import { Context } from ".."
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useAuthState } from "react-firebase-hooks/auth"
 import firebase from "firebase/compat/app"
+import { AccountContext } from "./UserContext";
 
 
 const Chat = () => {
-  const { auth, firestore } = useContext(Context)
-  const [user] = useAuthState(auth)
+  const {user} = useContext(AccountContext)
+
   const [message, setMessage] = useState<string>('')
-  const [messages, loading] = useCollectionData(
-    firestore.collection('messages').orderBy('createdAt')
-  )
+  const messages: any = []
   const textarea = document.querySelector('textarea')
   const chatMessages = document.querySelector('.chat__window__wrapper') as HTMLElement | null
   const chatInput = document.querySelector('.chat__window__input') as HTMLElement | null
@@ -24,17 +22,36 @@ const Chat = () => {
   const sendMessage = async (e: any) => {
     e.preventDefault()
     if (message === '') return;
-    firestore.collection('messages').add({
-      uid: user?.uid,
-      displayName: user?.displayName,
-      email: user?.email,
-      photoURL: user?.photoURL,
-      message: message,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    })
 
     setMessage('')
     if (textarea) textarea.style.cssText = 'height: 100%';
+
+    console.log(message)
+
+
+    await fetch("http://localhost:4000/message/newMessage", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: message })
+    })
+      .catch(err => {
+        console.log(err)
+        return
+      })
+      .then(
+        res => {
+          if (!res || !res.ok) {
+            return
+          }
+          return res.json()
+        }
+      )
+      .then(data => {
+        if (!data) return;
+      })
 
     setTimeout(() => {
       //if (chatMessages) chatMessages.scrollTo(0, chatMessages.scrollHeight * 2)
@@ -42,9 +59,6 @@ const Chat = () => {
         dummy.current.scrollIntoView({ behavior: 'smooth' })
     }, 500)
   }
-
-  if (loading)
-    return <Loader />
 
   textarea?.addEventListener('keydown', autosize);
 
@@ -61,6 +75,28 @@ const Chat = () => {
     }, 0);
   }
 
+
+  useEffect(() => {
+    fetch("http://localhost:4000/message/allmessages", {
+      credentials: "include"
+    })
+    .catch(err => {
+        return
+      })
+    .then(res => {
+        if(!res || !res.ok) {
+          return
+        }
+        return res.json()
+      })
+    .then((data) => {
+        if(!data) {
+          return
+        }
+        console.log(data)
+      })
+  })
+
   return (
     <div className="chat">
       <UserPanel />
@@ -68,7 +104,7 @@ const Chat = () => {
         <div className="chat__window">
           <div className="chat__window__wrapper">
             <div className="chat__window__messages">
-              {messages?.map((item, index) =>
+              {messages?.map((item: any, index: number) =>
                 <MessageItem
                   key={index}
                   avatar={item.photoURL}

@@ -1,27 +1,32 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Context } from '.'
 import { BrowserRouter } from 'react-router-dom'
 import { Navbar, AppRouter, Loader, Footer } from './components'
+import UserContext from './components/UserContext'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { AccountContext } from './components/UserContext'
 import './styles/styles.scss'
 
 function App() {
 
-  const { auth } = useContext(Context)
-  const [user, loading, error] = useAuthState(auth)
+  const { user, setUser } = useContext(AccountContext)
 
-  if (loading) {
-    console.log(loading)
-    return <Loader />
-  }
+
+
+  console.log(user)
+  //  if (loading) {
+  //    console.log(loading)
+  //    return <Loader />
+  //1  }
   return (
-    <div className="page-container">
-    <BrowserRouter>
-      <div className="content">
-        <AppRouter />
+    <UserContext>
+      <div className="page-container">
+        <BrowserRouter>
+          <div className="content">
+            <AppRouter />
+          </div>
+        </BrowserRouter>
       </div>
-    </BrowserRouter>
-    </div>
+    </UserContext>
 
   )
 }

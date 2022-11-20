@@ -1,14 +1,12 @@
 import { useContext } from 'react'
-import { Context } from '../index'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import Button from '@mui/material/Button'
+import { AccountContext } from './UserContext'
 
 const Navbar = () => {
-  const { auth } = useContext(Context)
-  const [user] = useAuthState(auth)
 
+  const { user } = useContext(AccountContext)
   const handleLogOut = () => {
-    auth.signOut()
   }
 
   return (
