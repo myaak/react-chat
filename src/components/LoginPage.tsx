@@ -1,20 +1,19 @@
 import { useContext } from 'react'
 import firebase from 'firebase/compat/app'
-import { Context } from '../index'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import { StyledTextField } from './StyledTextField'
 import { Formik } from 'formik'
 import { FormLabel } from '@mui/material'
 import * as Yup from 'yup'
+import { AccountContext } from './UserContext'
 
 const LoginPage = () => {
 
   const location = useLocation()
   const navigate = useNavigate()
-  const { auth } = useContext(Context)
 
-  let user = null
+  const { setUser } = useContext(AccountContext)
 
   const handleLogInWithEmail = async (username: string, password: string) => {
     await firebase.auth().signInWithEmailAndPassword(username, password)
@@ -45,28 +44,29 @@ const LoginPage = () => {
               .max(28, "Password too long!"),
           })}
 
-          onSubmit={async(values) => {
-              const userValues = {...values}
-              await fetch('http://localhost:4000/auth/login', {
-                method:"POST",
-                credentials: 'include',
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              body: JSON.stringify(userValues)
-              })
-              .catch((err:any) => {
+          onSubmit={async (values) => {
+            const userValues = { ...values }
+            await fetch('http://localhost:4000/auth/login', {
+              method: "POST",
+              credentials: 'include',
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email: userValues.email, password: userValues.password })
+            })
+              .catch((err: any) => {
                 console.log(err)
               })
-              .then((res:any) => {
+              .then((res: any) => {
                 return res.json()
               })
-              .then((data:any) => {
-                if(!data) return;
-                console.log(data)
+              .then((data: any) => {
+                if (!data) return;
+                setUser({...data})
+                navigate("/chat")
               })
 
-              //handleLogInWithEmail(user.email, user.password)
+            //handleLogInWithEmail(user.email, user.password)
           }}
         >
           {({
@@ -79,7 +79,7 @@ const LoginPage = () => {
               <FormLabel>Sign In</FormLabel>
               <StyledTextField label="Email" value={values.email} name="email"
                 onChange={handleChange}
-              /> 
+              />
               <StyledTextField label="Password" value={values.password} name="password"
                 type="password"
                 onChange={handleChange}
@@ -97,7 +97,7 @@ const LoginPage = () => {
           )}
         </Formik>
       </div>
-    </div>
+    </div >
   )
 }
 

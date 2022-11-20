@@ -2,17 +2,17 @@ import { useState, useContext, FormEvent } from 'react'
 import Button from "@mui/material/Button"
 import { StyledTextField } from './StyledTextField'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Context } from '..'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import {updateProfile } from 'firebase/auth'
+import { AccountContext } from './UserContext'
 
 
 
 const NicknameSelector = () => {
     const [userNickname, setUserNickname] = useState<string>('')
     const [error, setError] = useState<string>('')
-    const {auth} = useContext(Context)
-    const [user] = useAuthState(auth)
+
+    const {user}  = useContext(AccountContext)
 
     const navigate = useNavigate()
     const location = useLocation()
