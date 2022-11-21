@@ -13,7 +13,7 @@ const Chat = () => {
   const {user} = useContext(AccountContext)
 
   const [message, setMessage] = useState<string>('')
-  const messages: any = []
+  const [messages, setMessages] = useState<Array<Object>>()
   const textarea = document.querySelector('textarea')
   const chatMessages = document.querySelector('.chat__window__wrapper') as HTMLElement | null
   const chatInput = document.querySelector('.chat__window__input') as HTMLElement | null
@@ -57,7 +57,7 @@ const Chat = () => {
       //if (chatMessages) chatMessages.scrollTo(0, chatMessages.scrollHeight * 2)
       if (dummy.current)
         dummy.current.scrollIntoView({ behavior: 'smooth' })
-    }, 500)
+    }, 300)
   }
 
   textarea?.addEventListener('keydown', autosize);
@@ -93,7 +93,7 @@ const Chat = () => {
         if(!data) {
           return
         }
-        console.log(data)
+        setMessages([...data])
       })
   })
 
@@ -108,7 +108,7 @@ const Chat = () => {
                 <MessageItem
                   key={index}
                   avatar={item.photoURL}
-                  name={item.displayName === null ? item.email : item.displayName}
+                  name={item.ownerName}
                   message={item.message}
                 />
               )}

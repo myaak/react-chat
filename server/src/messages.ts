@@ -26,20 +26,34 @@ router.post("/newMessage", async (req: any, res: any) => {
 
 })
 
-router.post("/allmessages", async (res: any) => {
+
+router
+  .route("/allmessages")
   //@ts-ignore
-  const messages = await pool.query(
-    "SELECT * FROM MESSAGES"
-  )
-  for (let i = 0; i < messages.rowCount; ++i) {
-    res.json({
-      message: messages.rows[i].messagetext,
-      owner: messages.rows[i].messageowner_id
-    })
-  }
-})
-router.post("/m", async (res: any) => {
-  res.json('hi')
-})
+  .get(async (req: any, res: any) => {
+    //@ts-ignore
+    const messages = await pool.query(
+      "SELECT M.*, U.USERNAME FROM MESSAGES M, USERS U WHERE U.ID = M.MESSAGEOWNER_ID",
+      []
+    )
+
+    let messagesList: any = []
+
+    for (let i = 0; i < messages.rowCount; ++i) {
+      messagesList.push({
+        message: messages.rows[i].messagetext,
+        owner: messages.rows[i].messageowner_id,
+        ownerName: messages.rows[i].username
+      })
+    }
+    console.log(messagesList)
+
+    res.json(messagesList)
+
+
+  })
+
+
+//ничего не работает с фетчем сообщений
 
 module.exports = router

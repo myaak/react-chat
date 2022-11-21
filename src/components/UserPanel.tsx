@@ -36,7 +36,7 @@ const UserPanel = () => {
       return;
     }
 
-    fetch("http://localhost:4000/modify/changename", {
+    await fetch("http://localhost:4000/modify/changename", {
       method: "POST",
       credentials: "include",
       headers:{
@@ -50,12 +50,13 @@ const UserPanel = () => {
       })
     .then(res => {
         if(!res || !res.ok) {
+          console.log('not ok')
           return
         }
         return res.json()
       })
     .then(data => {
-        console.log({...user, data})
+        console.log('changed on', {...user, data})
       })
     }
 
