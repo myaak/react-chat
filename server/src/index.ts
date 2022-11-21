@@ -17,14 +17,14 @@ const server = require("http").createServer(app)
 
 const io = new Server(server, {
   cors: {
-    origin: "http://*",
+    origin: "http://localhost:3000",
     credentials: "true"
   }
 })
 
 app.use(helmet())
 app.use(cors({
-  origin: "http://*",
+  origin: "http://localhost:3000",
   credentials: true
 }))
 app.use(express.json())
@@ -57,7 +57,7 @@ io.on("connect", (socket: any) => {
 //server.listen(4000, () => {
 //  console.log("Listening on port 4000")
 //})
-server.listen(8080,"193.201.88.172", () => {
+server.listen(4000, () => {
   console.log('listen 4000')
 });
 
