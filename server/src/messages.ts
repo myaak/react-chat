@@ -46,7 +46,6 @@ router
         ownerName: messages.rows[i].username
       })
     }
-    console.log(messagesList)
 
     res.json(messagesList)
 

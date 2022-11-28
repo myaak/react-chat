@@ -43,10 +43,11 @@ app.use(session({
 
 }))
 
-app.use("/auth", authRouter)
-app.use("/modify", changeProps)
+app.use('/auth', authRouter)
+app.use('/modify', changeProps)
 app.use('/message', messages)
-app.get('/', (res: any) => {
+//@ts-ignore
+app.get('/', (req: any, res: any) => {
   res.json('hi')
 })
 

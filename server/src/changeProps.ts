@@ -1,13 +1,12 @@
 import express = require("express")
 
+//@ts-ignore
 const pool = require('./db')
 
 const router = express.Router()
 
-
-router.post("/changename", async (req: any, res: any) => {
+router.post("/nickname", async (req: any, res: any) => {
   const newUserNickname = req.body.username
-
 
   //@ts-ignore
   const newNicknameReq = await pool.query(
@@ -15,22 +14,25 @@ router.post("/changename", async (req: any, res: any) => {
     [newUserNickname, req.body.email]
   )
 
-  const userNewInfo = await pool.query(
-    "SELECT id, email, username FROM users WHERE EMAIL=$1 AND USERNAME=$2",
-    [req.body.email, newUserNickname]
-  )
+    const userNewInfo = await pool.query(
+     "SELECT id, email, username FROM users WHERE EMAIL=$1 AND USERNAME=$2",
+      [req.body.email, newUserNickname]
+    )
+   console.log(userNewInfo)
 
-  const newUser = {
-    id: userNewInfo.rows[0].id,
-    email: userNewInfo.rows[0].email,
-    username: userNewInfo.rows[0].username
-  }
+   const newUser = {
+     id: userNewInfo.rows[0].id,
+     email: userNewInfo.rows[0].email,
+     username: userNewInfo.rows[0].username
+   }
 
-  req.session.user = {
-    id: newUser.id,
-    email: newUser.email,
-    username: newUser.username
-  }
+   console.log(newUser)
+
+   req.session.user = {
+     id: newUser.id,
+     email: newUser.email,
+     username: newUser.username
+   }
 
   res.json({ username: newUserNickname })
 

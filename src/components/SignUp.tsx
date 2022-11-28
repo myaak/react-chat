@@ -11,7 +11,7 @@ const SignUpPage = () => {
   const [userRepeatPassword, setRepeatUserPassword] = useState<string>('')
   const [error, setError] = useState<string>('')
 
-  const {setUser} = useContext(AccountContext)
+  const { setUser } = useContext(AccountContext)
 
 
   const navigate = useNavigate()
@@ -40,7 +40,7 @@ const SignUpPage = () => {
     //    setError(error.toString())
     //  })
     //
-    await fetch("http://192.168.0.104:4000/auth/signup", {
+    await fetch("http://localhost:4000/auth/signup", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -62,7 +62,7 @@ const SignUpPage = () => {
       )
       .then(data => {
         if (!data) return;
-        setUser({...data})
+        setUser({ ...data })
       })
   }
 

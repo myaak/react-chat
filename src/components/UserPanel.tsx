@@ -36,57 +36,61 @@ const UserPanel = () => {
       return;
     }
 
-    await fetch("http://localhost:4000/modify/changename", {
+    e.preventDefault()
+
+    await fetch('http://localhost:4000/modify/nickname', {
       method: "POST",
       credentials: "include",
-      headers:{
+      headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({email: user.email, username: newNickname})
+      body: JSON.stringify({ email: user.email, username: newNickname })
     })
-    .catch(err => {
+      .catch(err => {
         console.log(err)
         return
       })
-    .then(res => {
-        if(!res || !res.ok) {
-          console.log('not ok')
-          return
+      .then(
+        res => {
+          if (!res || !res.ok) {
+          console.log('unable')
+            return
+          }
+          return res.json()
         }
-        return res.json()
+      )
+      .then(data => {
+        if (!data) return;
+        setUser({...user, username: data.username})
       })
-    .then(data => {
-        console.log('changed on', {...user, data})
-      })
-    }
+  }
 
   const handleLogOut = () => {
     fetch("http://localhost:4000/auth/logout", {
       method: "POST",
       credentials: "include",
-      headers:{
+      headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({loggedIn: false, email: null})
+      body: JSON.stringify({ loggedIn: false, email: null })
     })
-    .catch(err => {
+      .catch(err => {
         console.log(err)
         return
       })
-    .then(res => {
-        if(!res || !res.ok) {
+      .then(res => {
+        if (!res || !res.ok) {
           return
         }
         return res.json()
       })
-    .then(data => {
-        setUser({...data})
+      .then(data => {
+        setUser({ ...data })
       })
   }
 
   useEffect(() => {
-    console.log(user?.displayName)
-  }, [user?.displayName])
+  }, [user.username])
 
   return user ? (
     <div className="user_panel">

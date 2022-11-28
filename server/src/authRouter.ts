@@ -10,9 +10,10 @@ router
   .route("/login")
   .get(async (req: any, res: any) => {
     if (req.session.user && req.session.user.email) {
-      res.json({ loggedIn: true, 
-               email: req.session.user.email,
-               username: req.session.user.username
+      res.json({
+        loggedIn: true,
+        email: req.session.user.email,
+        username: req.session.user.username
       })
     } else {
       res.json({ loggedIn: false })
@@ -40,9 +41,10 @@ router
           username: potentialLogin.rows[0].username
         }
         console.log('loggedin')
-        res.json({ loggedIn: true, 
-                 email: req.body.email, 
-                 username: req.session.user.username 
+        res.json({
+          loggedIn: true,
+          email: req.body.email,
+          username: req.session.user.username
         })
       } else {
         console.log('bad')
@@ -77,9 +79,10 @@ router.post("/signup", async (req: any, res: any) => {
       username: null
     }
     console.log('loggedin')
-    res.json({ loggedIn: true, 
-             email: req.body.email, 
-             username: req.session.user.username
+    res.json({
+      loggedIn: true,
+      email: req.body.email,
+      username: req.session.user.username
     })
   } else {
     res.json({ loggedIn: false, status: "Email already exists" })
@@ -87,13 +90,13 @@ router.post("/signup", async (req: any, res: any) => {
 
 })
 
-router.post("/logout", (req:any, res:any) => {
+router.post("/logout", (req: any, res: any) => {
   req.session.user = {
     email: null,
     id: null,
     username: null
   }
-  res.json({loggedin: false, email: null})
+  res.json({ loggedin: false, email: null })
 })
 
 module.exports = router
