@@ -46,7 +46,8 @@ router
     .get(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         if (req.session.user && req.session.user.email) {
-            res.json({ loggedIn: true,
+            res.json({
+                loggedIn: true,
                 email: req.session.user.email,
                 username: req.session.user.username
             });
@@ -75,7 +76,8 @@ router
                             username: potentialLogin.rows[0].username
                         };
                         console.log('loggedin');
-                        res.json({ loggedIn: true,
+                        res.json({
+                            loggedIn: true,
                             email: req.body.email,
                             username: req.session.user.username
                         });
@@ -115,7 +117,8 @@ router.post("/signup", function (req, res) { return __awaiter(void 0, void 0, vo
                     username: null
                 };
                 console.log('loggedin');
-                res.json({ loggedIn: true,
+                res.json({
+                    loggedIn: true,
                     email: req.body.email,
                     username: req.session.user.username
                 });

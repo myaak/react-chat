@@ -3,14 +3,11 @@ import { UserPanel, UsersList } from '.'
 import { MessageItem, Loader } from "./index"
 import SendIcon from '@mui/icons-material/Send';
 import IconButton from '@mui/material/IconButton'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { useAuthState } from "react-firebase-hooks/auth"
-import firebase from "firebase/compat/app"
 import { AccountContext } from "./UserContext";
 
 
 const Chat = () => {
-  const {user} = useContext(AccountContext)
+  const { user } = useContext(AccountContext)
 
   const [message, setMessage] = useState<string>('')
   const [messages, setMessages] = useState<Array<Object>>()
@@ -80,22 +77,22 @@ const Chat = () => {
     fetch("http://localhost:4000/message/allmessages", {
       credentials: "include"
     })
-    .catch(err => {
+      .catch(err => {
         return
       })
-    .then(res => {
-        if(!res || !res.ok) {
+      .then(res => {
+        if (!res || !res.ok) {
           return
         }
         return res.json()
       })
-    .then((data) => {
-        if(!data) {
+      .then((data) => {
+        if (!data) {
           return
         }
         setMessages([...data])
       })
-  })
+  }, [])
 
   return (
     <div className="chat">

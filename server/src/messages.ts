@@ -39,6 +39,7 @@ router
 
     let messagesList: any = []
 
+
     for (let i = 0; i < messages.rowCount; ++i) {
       messagesList.push({
         message: messages.rows[i].messagetext,
@@ -48,8 +49,6 @@ router
     }
 
     res.json(messagesList)
-
-
   })
 
 

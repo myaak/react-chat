@@ -36,10 +36,11 @@ app.use(session({
         sameSite: process.env.ENVIRONMENT === "production" ? "none" : "lax"
     }
 }));
-app.use("/auth", authRouter);
-app.use("/modify", changeProps);
+app.use('/auth', authRouter);
+app.use('/modify', changeProps);
 app.use('/message', messages);
-app.get('/', function (res) {
+//@ts-ignore
+app.get('/', function (req, res) {
     res.json('hi');
 });
 io.on("connect", function (socket) {

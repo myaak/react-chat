@@ -79,7 +79,6 @@ router
                         ownerName: messages.rows[i].username
                     });
                 }
-                console.log(messagesList);
                 res.json(messagesList);
                 return [2 /*return*/];
         }

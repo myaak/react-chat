@@ -14,25 +14,23 @@ router.post("/nickname", async (req: any, res: any) => {
     [newUserNickname, req.body.email]
   )
 
-    const userNewInfo = await pool.query(
-     "SELECT id, email, username FROM users WHERE EMAIL=$1 AND USERNAME=$2",
-      [req.body.email, newUserNickname]
-    )
-   console.log(userNewInfo)
+  const userNewInfo = await pool.query(
+    "SELECT id, email, username FROM users WHERE EMAIL=$1 AND USERNAME=$2",
+    [req.body.email, newUserNickname]
+  )
 
-   const newUser = {
-     id: userNewInfo.rows[0].id,
-     email: userNewInfo.rows[0].email,
-     username: userNewInfo.rows[0].username
-   }
+  const newUser = {
+    id: userNewInfo.rows[0].id,
+    email: userNewInfo.rows[0].email,
+    username: userNewInfo.rows[0].username
+  }
 
-   console.log(newUser)
 
-   req.session.user = {
-     id: newUser.id,
-     email: newUser.email,
-     username: newUser.username
-   }
+  req.session.user = {
+    id: newUser.id,
+    email: newUser.email,
+    username: newUser.username
+  }
 
   res.json({ username: newUserNickname })
 

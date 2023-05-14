@@ -27,7 +27,6 @@ router
       [req.body.email]
     )
 
-
     if (potentialLogin.rowCount > 0) {
       const isPassSame = bcrypt.compare(
         req.body.password,
@@ -70,8 +69,8 @@ router.post("/signup", async (req: any, res: any) => {
     //register
     const hashedPass = await bcrypt.hash(req.body.password, 10)
     const newUserQuery = await pool.query(
-      "INSERT INTO USERS(email, passhash) values ($1, $2) RETURNING id, email",
-      [req.body.email, hashedPass]
+      "INSERT INTO USERS(email, passhash, SESSION_ID) values ($1, $2, $3) RETURNING id, email",
+      [req.body.email, hashedPass, req.sessionID]
     )
     req.session.user = {
       email: req.body.email,

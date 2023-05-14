@@ -5,10 +5,12 @@ const { Server } = require('socket.io')
 const app = express()
 const helmet = require('helmet')
 const session = require('express-session')
+const pgSession = require('connect-pg-simple')(session)
 
 const authRouter = require('./authRouter')
 const changeProps = require('./changeProps')
 const messages = require('./messages')
+const pool = require('./db')
 
 
 require("dotenv").config()
@@ -29,6 +31,9 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(session({
+  store: new pgSession({
+    pool: pool, 
+  }),
   secret: process.env.COOKIE_SECRET,
   credentials: true,
   name: "sid",

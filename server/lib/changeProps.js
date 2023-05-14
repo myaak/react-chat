@@ -37,9 +37,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
+//@ts-ignore
 var pool = require('./db');
 var router = express.Router();
-router.post("/changename", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.post("/nickname", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var newUserNickname, newNicknameReq, userNewInfo, newUser;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -51,11 +52,13 @@ router.post("/changename", function (req, res) { return __awaiter(void 0, void 0
                 return [4 /*yield*/, pool.query("SELECT id, email, username FROM users WHERE EMAIL=$1 AND USERNAME=$2", [req.body.email, newUserNickname])];
             case 2:
                 userNewInfo = _a.sent();
+                console.log(userNewInfo);
                 newUser = {
                     id: userNewInfo.rows[0].id,
                     email: userNewInfo.rows[0].email,
                     username: userNewInfo.rows[0].username
                 };
+                console.log(newUser);
                 req.session.user = {
                     id: newUser.id,
                     email: newUser.email,
