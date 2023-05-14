@@ -22,20 +22,8 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-
-const auth = firebase.auth()
-const firestore = firebase.firestore()
-
-export const Context = createContext<any | null>(null)
-
 root.render(
-  <Context.Provider value={{
-    firebase,
-    auth,
-    firestore
-  }}>
     <App />
-  </Context.Provider>
 )
 
 reportWebVitals()

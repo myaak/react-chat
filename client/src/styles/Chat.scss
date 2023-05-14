@@ -3,7 +3,7 @@
 .chat {
   display:flex;
     width:100%;
-    height:calc(100vh - 72px - 72px);
+    height: calc(100vh - .5rem);
     background-color:$mainColor;
 
   
@@ -24,7 +24,7 @@
     }
     
     &__window {
-      height:99%;
+      height:100%;
       width:100%;
       background-color:$mainColor;
       display:flex;
@@ -35,7 +35,8 @@
       position:relative;
 
     &__wrapper {
-      min-height: calc(90% - 72px);
+//      min-height: calc(90% - 72px);
+height: 100%;
       overflow-y:scroll;
       overflow-x:hidden;
       display: flex;
